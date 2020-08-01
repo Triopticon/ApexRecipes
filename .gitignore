@@ -25,6 +25,9 @@ node_modules/
 # Eslint cache
 .eslintcache
 
+# PMD Cache File
+.pmdCache
+
 # MacOS system files
 .DS_Store
 
@@ -33,3 +36,6 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+# Misc
+apex-documentation/

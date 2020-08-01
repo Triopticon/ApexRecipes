@@ -7,5 +7,12 @@
   "salesforcedx-vscode-core.show-cli-success-msg": false,
   "cSpell.words": [
     "soql"
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "apexPMD.enableCache": true,
+  "apexPMD.runOnFileChange": true,
+  "prettier.tabWidth": 4,
+  "salesforcedx-vscode-apex.enable-semantic-errors": true,
+  "salesforcedx-vscode-core.detectConflictsAtSync": true,
+  "salesforcedx-vscode-core.push-or-deploy-on-save.enabled": true
 }
