@@ -33,6 +33,8 @@ public with sharing class SOQLRecipes {
      * @author Kenneth Soerensen (kenneth@ks81.com)
      * @since Version 0.1.0 - Aug 2020
      * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accounts = querySingleObject();
      */
     public static List<Account> querySingleObject() {
         List<Account> accounts = [SELECT Name, ShippingStreet FROM Account];
@@ -46,6 +48,8 @@ public with sharing class SOQLRecipes {
      * @author Kenneth Soerensen (kenneth@ks81.com)
      * @since Version 0.1.0 - Aug 2020
      * @returns Returns the count of records as `integer`
+     * @example 
+     * Integer recordCount = queryMassiveNumberOfRecordsReturningCount();
      */
     public static integer queryMassiveNumberOfRecordsReturningCount() {
         Integer count = 0;
@@ -65,6 +69,8 @@ public with sharing class SOQLRecipes {
      * @author Kenneth Soerensen (kenneth@ks81.com)
      * @since Version 0.1.0 - Aug 2020
      * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> filteredAccounts = getFilteredList();
      */
     public static List<Account> getFilteredList() {
         List<Account> accounts = [
@@ -85,6 +91,8 @@ public with sharing class SOQLRecipes {
      * @author Kenneth Soerensen (kenneth@ks81.com)
      * @since Version 0.1.0 - Aug 2020
      * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accountsInUs = getComplexFilteredList();
      */
     public static List<Account> getComplexFilteredList() {
         List<Account> accountsInUS = [
@@ -101,11 +109,77 @@ public with sharing class SOQLRecipes {
     }
 
     /**
+     * Showing how to query with the use of `LIMIT` statement in the  SOQL 
+     * statement by querying the Account object for all records with the limit:
+     * `LIMIT 10`
      *
-     *
-     * @returns `List<Account>`
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accounts = getSpecificNumberOfResults();
      */
     public static List<Account> getSpecificNumberOfResults() {
         return [SELECT Name FROM Account LIMIT 10];
+    }
+
+    /**
+     * Showing how to query with the use of `LIMIT` statement in the SOQL 
+     * statement by querying the Account object for all records with the limit:
+     * `LIMIT 10`
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @param wantedNumberOfRows The number of rows to return from the SOQL statement.
+     * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accounts = getFirstXResults(10);
+     */
+    public static List<Account> getFirstXResults(Integer wantedNumberOfRows) {
+        return [
+            SELECT Name
+            FROM Account
+            ORDER BY Industry DESC
+            LIMIT :wantedNumberOfRows
+            ];
+    }
+
+    /**
+     * Query Accounts with a specific ShippingState dynamically.
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @param state The Shipping
+     * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accounts = getAccountsInState('Alabama');
+     */
+    public static List<Account> getAccountsInState(String state) {
+        return [
+            SELECT Name
+            FROM Account
+            WHERE ShippingState = :state
+        ];
+    }
+
+    /**
+     * Showing how to query with the use of `OFFSET` and `LIMIT`statement in the 
+     *  SOQL statement by querying the Account object for all records with the 
+     * limit and offset: `LIMIT 10 OFFSET 10`
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @returns Returns a list of Accounts as `List<Account>`
+     * @example 
+     * List<Account> accounts = getSecond10Accounts();
+     */
+    public static List<Account> getSecond10Accounts() {
+        return [
+            SELECT Name
+            FROM Account
+            ORDER BY Industry DESC
+            LIMIT 10
+            OFFSET 10
+            ];
     }
 }
