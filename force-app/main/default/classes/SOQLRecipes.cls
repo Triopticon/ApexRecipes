@@ -56,4 +56,56 @@ public with sharing class SOQLRecipes {
         }
         return count;
     }
+
+    /**
+     * Showing how to query with a simple where clause SOQL statement
+     * by querying the Account object for all records with the where clause:
+     * `ShippingCountry = 'UK'`
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @returns Returns a list of Accounts as `List<Account>`
+     */
+    public static List<Account> getFilteredList() {
+        List<Account> accounts = [
+            SELECT Name
+            FROM Account
+            WHERE ShippingCountry = 'UK'
+        ];
+
+        return accounts;
+    }
+
+    /**
+     * Showing how to query with a more advanced where clause SOQL statement
+     * by querying the Account object for all records with the where clause:
+     * `ShippingCountry = 'US' AND ShippingState = 'Indiana' AND
+     * (Industry = 'Fast Food - Made whole' OR Industry = 'Slow Food - Made quickly')`
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @returns Returns a list of Accounts as `List<Account>`
+     */
+    public static List<Account> getComplexFilteredList() {
+        List<Account> accountsInUS = [
+            SELECT Name
+            FROM Account
+            WHERE
+                ShippingCountry = 'US'
+                AND ShippingState = 'Indiana'
+                AND (Industry = 'Fast Food - Made whole'
+                OR Industry = 'Slow Food - Made quickly')
+        ];
+
+        return accountsInUS;
+    }
+
+    /**
+     *
+     *
+     * @returns `List<Account>`
+     */
+    public static List<Account> getSpecificNumberOfResults() {
+        return [SELECT Name FROM Account LIMIT 10];
+    }
 }

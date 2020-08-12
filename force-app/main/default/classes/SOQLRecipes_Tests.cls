@@ -15,46 +15,62 @@
  */
 @IsTest
 private class SOQLRecipes_Tests {
+    /**
+     * Test the SOQLRecipes.querySingleObject method.
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @see SOQLRecipes.querySingleObject
+     */
     @IsTest
     static void testSimpleQuerySingleObject() {
-        /*
-         * Creating test data.
-         * Setup our test structure.
-         * Call Test.StartTest();.
-         * Execute our code.
-         * Call Test.StopTest();.
-         * Make assertions against what we executed.
-         */
-
         Account acct = new Account(
             Name = 'The Test Account of awesomeness',
             ShippingStreet = '123 Sesame St.',
             ShippingCity = 'New Jersey?'
         );
         insert acct;
+
         Test.startTest();
         List<Account> testAccounts = SOQLRecipes.querySingleObject();
         Test.stopTest();
+
         System.assertEquals(
             testAccounts.size(),
             1,
             'We found more or less then 1 account having created exactly 1 account.'
         );
-        System.assert(testAccounts[1].Name.contains('Awesome'));
+        System.debug(testAccounts[0].Name.contains('awesome'));
+        System.assert(testAccounts[0].Name.contains('awesome'));
     }
 
+    /**
+     * Test the SOQLRecipes.queryMassiveNumberOfRecordsReturningCount method.
+     *
+     * @author Kenneth Soerensen (kenneth@ks81.com)
+     * @since Version 0.1.0 - Aug 2020
+     * @see SOQLRecipes.queryMassiveNumberOfRecordsReturningCount
+     */
     @IsTest
     static void testCountOfLargeDataVolumes() {
-        // Create test data.
-        // Execute our code startTest().
-        // StopTest().
-        // Make assertions.
         List<Account> testAccounts = new List<Account>();
 
-        for (Integer i = 0; i < 1500; i++) {
-            testAccounts.add(new Account(Name = 'TestAccount ' + i));
+        for (Integer x = 0; x <= 1; x++) {
+            for (Integer i = 0; i < 1500; i++) {
+                testAccounts.add(new Account(Name = 'TestAccount ' + i));
+            }
+            insert testAccounts;
+            testAccounts.clear();
         }
-        insert testAccounts;
-        testAccounts.clear();
+
+        System.assertEquals(
+            [SELECT id FROM Account].size(),
+            3000,
+            'Expected to have created 3k records'
+        );
+        Test.startTest();
+        Integer count = SOQLRecipes.queryMassiveNumberOfRecordsReturningCount();
+        Test.stopTest();
+        System.assertEquals(count, 3000, 'Expected to find 3k records.');
     }
 }
